@@ -1,4 +1,11 @@
+"use client";
+import { useRef, useState } from "react";
+import ReactToPrint from "react-to-print";
+import QRCode from "qrcode.react"; // QR kodu oluşturmak için gerekli kütüphane
+
 export default function Report({ laboratory, analysis }) {
+  const componentRef = useRef();
+
   return (
     <div className="bg-background text-foreground font-sans">
       <header className="bg-primary text-primary-foreground py-3 px-4 md:px-6">
@@ -16,7 +23,8 @@ export default function Report({ laboratory, analysis }) {
         </div>
       </header>
 
-      <main className="px-6 py-6 md:px-4 lg:px-14">
+      <main className="px-6 py-6 md:px-4 lg:px-14" ref={componentRef}>
+        {/* İçerik buraya gelecek */}
         <div className="flex flex-col md:flex-row justify-between mb-4">
           <div className="mt-2 md:mt-0">
             <span className="text-sm md:text-lg font-medium">
@@ -142,9 +150,20 @@ export default function Report({ laboratory, analysis }) {
             </p>
           ))}
         </section>
+
+        <div className="fixed top-6 right-0 m-4 hidden lg:block">
+          <QRCode value={window.location.href} size={64} />
+        </div>
       </main>
+
       <footer className="bg-muted text-muted-foreground mt-6 py-4 px-2 md:px-4 lg:px-6 text-sm md:text-base">
         <p>&copy; 2024 {laboratory.name}. Tüm Hakları Saklıdır.</p>
+        <div className="flex justify-end">
+          <ReactToPrint
+            trigger={() => <button className="btn">Yazdır</button>}
+            content={() => componentRef.current}
+          />
+        </div>
       </footer>
     </div>
   );
