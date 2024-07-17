@@ -1,19 +1,23 @@
-"use client"; // This is not standard JavaScript, so assuming it's a comment
+"use client";
 
 import { useRef, useEffect, useState } from "react";
 import ReactToPrint from "react-to-print";
-import QRCode from "qrcode.react"; // QR kodu oluşturmak için gerekli kütüphane
+import QRCode from "qrcode.react";
 
 export default function Report({ laboratory, analysis }) {
   const componentRef = useRef();
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
-    setIsClient(true); // Set isClient to true when component mounts
+    setIsClient(true);
   }, []);
 
   return (
-    <div className="bg-background text-foreground font-sans">
+    <div
+      className="bg-background text-foreground font-sans"
+      ref={componentRef}
+      style={{ maxWidth: "1300px", margin: "0 auto" }}
+    >
       <header className="bg-primary text-primary-foreground py-3 px-4 md:px-6">
         <div className="flex flex-col md:flex-row items-center justify-center md:justify-between">
           <div className="flex items-center gap-2">
@@ -29,25 +33,27 @@ export default function Report({ laboratory, analysis }) {
         </div>
       </header>
 
-      <main className="px-6 py-6 md:px-4 lg:px-14" ref={componentRef}>
+      <main className="px-6 py-6 md:px-4 lg:px-14">
         {/* İçerik buraya gelecek */}
         <div className="flex flex-col md:flex-row justify-between mb-4">
           <div className="mt-2 md:mt-0">
             <span className="text-sm md:text-lg font-medium">
-              Rapor ID: {analysis.reportId} | Rapor Numarası:{" "}
-              {analysis.reportNumber}
+              Rapor Tarihi :{analysis.date} | Rapor ID: {analysis.reportId} |
+              Rapor Numarası: {analysis.reportNumber}
             </span>
           </div>
         </div>
         <section>
-          <h3 className="text-lg md:text-xl font-bold mb-2">Örnek Bilgileri</h3>
+          <h3 className="text-lg md:text-xl font-bold mb-2">
+            Numune Bilgileri
+          </h3>
           <div className="grid grid-cols-3 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-4">
             <div>
-              <p className="text-sm md:text-base font-medium">Materyal ID:</p>
+              <p className="text-sm md:text-base font-medium">Numune ID:</p>
               <p className="text-sm md:text-lg">{analysis.sample.id}</p>
             </div>
             <div>
-              <p className="text-sm md:text-base font-medium">Materyal Türü:</p>
+              <p className="text-sm md:text-base font-medium">Numune Türü:</p>
               <p className="text-sm md:text-lg">{analysis.sample.type}</p>
             </div>
             <div>
@@ -56,14 +62,6 @@ export default function Report({ laboratory, analysis }) {
               </p>
               <p className="text-sm md:text-lg">
                 {analysis.sample.collectedDate}
-              </p>
-            </div>
-            <div>
-              <p className="text-sm md:text-base font-medium">
-                Teslim Alınma Tarihi:
-              </p>
-              <p className="text-sm md:text-lg">
-                {analysis.sample.receivedDate}
               </p>
             </div>
             <div>
@@ -80,7 +78,7 @@ export default function Report({ laboratory, analysis }) {
               Analiz Bilgileri
             </h3>
             <p className="text-sm md:text-lg">
-              Örnek aşağıdaki standartlara göre analiz edilmiştir.
+              Numune aşağıdaki standartlara göre analiz edilmiştir.
             </p>
             <ul className="mt-2">
               {analysis.methodology.map((method, index) => (
@@ -92,7 +90,7 @@ export default function Report({ laboratory, analysis }) {
           </section>
           <section className="mt-4">
             <h3 className="text-lg md:text-xl font-bold mb-2">
-              Teknisyen Bilgileri
+              Yetkili Personel
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-6">
               <div>
@@ -158,15 +156,15 @@ export default function Report({ laboratory, analysis }) {
         </section>
 
         {isClient && (
-          <div className="fixed top-6 right-0 m-4 hidden lg:block">
-            <QRCode value={window.location.href} size={64} />
+          <div className="fixed bottom-6 right-20 m-4 hidden lg:block">
+            <QRCode value={window.location.href} size={128} />
           </div>
         )}
       </main>
 
       <footer className="bg-muted text-muted-foreground mt-6 py-4 px-2 md:px-4 lg:px-6 text-sm md:text-base">
         <p>&copy; 2024 {laboratory.name}. Tüm Hakları Saklıdır.</p>
-        <div className="flex justify-end">
+        <div className="flex justify-end hidden lg:block">
           <ReactToPrint
             trigger={() => <button className="btn">Yazdır</button>}
             content={() => componentRef.current}

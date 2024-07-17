@@ -1,20 +1,20 @@
 import Report from "../_components/report";
 
 const laboratory = {
-  name: "Edremit Ticaret Borsası Zeytinyağı Analiz Laboratuvarı",
-  address: "Camivasat, Menderes Blv. No:43, 10300 Edremit/Balıkesir",
-  email: "info@edremitlab.com",
-  phone: "(0266) 373 10 61",
+  name: "Edremit Ticaret Borsası Analiz Laboratuvarı",
+  address: "Camivasat Mah. Menderes Bul. No:43 Edremit/Balıkesir",
+  email: "edremittb.org.tr - bilgi@edremittb.org.tr",
+  phone: "0(266) 373 65 66",
 };
 
 const analysis = {
   reportId: "AR-22",
   reportNumber: "6915 / 2",
+  date: "2024-07-13",
   sample: {
     id: "ED-M-124",
     type: "Zeytinyağı",
     collectedDate: "2024-07-14",
-    receivedDate: "2024-07-15",
     analysisDate: "2024-07-16",
   },
   methodology: ["C.O.I"],
