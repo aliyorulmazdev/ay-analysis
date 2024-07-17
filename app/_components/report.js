@@ -47,7 +47,7 @@ export default function Report({ laboratory, analysis }) {
           <h3 className="text-lg md:text-xl font-bold mb-2">
             Numune Bilgileri
           </h3>
-          <div className="grid grid-cols-3 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-4">
+          <div className="grid grid-cols-4 md:grid-cols-4 lg:grid-cols-4 gap-4 md:gap-4">
             <div>
               <p className="text-sm md:text-base font-medium">Numune ID:</p>
               <p className="text-sm md:text-lg">{analysis.sample.id}</p>
@@ -146,20 +146,21 @@ export default function Report({ laboratory, analysis }) {
             </table>
           </div>
         </section>
-        <section className="mt-4">
-          <h3 className="text-lg md:text-xl font-bold mb-2">Notlar</h3>
-          {analysis.conclusion.map((line, index) => (
-            <p key={index} className="text-sm md:text-lg">
-              {line}
-            </p>
-          ))}
-        </section>
-
-        {isClient && (
-          <div className="fixed bottom-6 right-20 m-4 hidden lg:block">
-            <QRCode value={window.location.href} size={128} />
+        <section className="mt-4 flex flex-col lg:flex-row">
+          <div className="lg:w-3/4 lg:pr-4">
+            <h3 className="text-lg md:text-xl font-bold mb-2">Notlar</h3>
+            {analysis.conclusion.map((line, index) => (
+              <p key={index} className="text-sm md:text-lg">
+                {line}
+              </p>
+            ))}
           </div>
-        )}
+          {isClient && (
+            <div className="lg:w-1/4 m-4 hidden lg:block pl-40">
+              <QRCode value={window.location.href} size={128} />
+            </div>
+          )}
+        </section>
       </main>
 
       <footer className="bg-muted text-muted-foreground mt-6 py-4 px-2 md:px-4 lg:px-6 text-sm md:text-base">
