@@ -1,10 +1,16 @@
-"use client";
-import { useRef, useState } from "react";
+"use client"; // This is not standard JavaScript, so assuming it's a comment
+
+import { useRef, useEffect, useState } from "react";
 import ReactToPrint from "react-to-print";
 import QRCode from "qrcode.react"; // QR kodu oluşturmak için gerekli kütüphane
 
 export default function Report({ laboratory, analysis }) {
   const componentRef = useRef();
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true); // Set isClient to true when component mounts
+  }, []);
 
   return (
     <div className="bg-background text-foreground font-sans">
@@ -151,9 +157,11 @@ export default function Report({ laboratory, analysis }) {
           ))}
         </section>
 
-        <div className="fixed top-6 right-0 m-4 hidden lg:block">
-          <QRCode value={window.location.href} size={64} />
-        </div>
+        {isClient && (
+          <div className="fixed top-6 right-0 m-4 hidden lg:block">
+            <QRCode value={window.location.href} size={64} />
+          </div>
+        )}
       </main>
 
       <footer className="bg-muted text-muted-foreground mt-6 py-4 px-2 md:px-4 lg:px-6 text-sm md:text-base">
